@@ -1,215 +1,248 @@
-<div align="center">
-  <img height="70px" src="https://github.com/user-attachments/assets/6cc9dfea-da1f-4351-945c-6d770174df0d" alt="Technology Icons">
-  <h1>React.shadcn.JS-Template</h1>
-</div>
+# Global Meme Translator
 
-Welcome to the **React.shadcn.JS-Template**! This template is a robust starting point for
-building modern web applications using Vite and React with ShadcnUI, a design system for creating beautiful and
-consistent UIs.
+> Translate meme captions to 12 languages using Lingo CLI and AI-powered translation.
 
-## Table of Contents
+[![React](https://img.shields.io/badge/React-18.2-blue)](https://reactjs.org/)
+[![Lingo.dev](https://img.shields.io/badge/Lingo.dev-CLI-green)](https://lingo.dev)
+[![Express](https://img.shields.io/badge/Express-5.1-lightgrey)](https://expressjs.com/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3.4-cyan)](https://tailwindcss.com/)
 
-- [Overview](#overview)
-    - [Why This Template?](#why-this-template)
-    - [Technologies Used](#technologies-used)
-    - [Features](#features)
-- [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Running the Development Server](#running-the-development-server)
-    - [Building for Production](#building-for-production)
-    - [Linting and Formatting](#linting-and-formatting)
-- [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [Contact](#contact)
-- [Acknowledgments](#acknowledgments)
+## ✨ Features
 
-## Overview
+- 🌍 **12 Languages**: Spanish, French, German, Italian, Portuguese, Japanese, Korean, Chinese, Arabic, Hindi, Russian, Turkish
+- ⚡ **Lingo CLI**: Official CLI integration with SDK fallback
+- 🎨 **Canvas Overlay**: Dynamic text rendering with auto-sizing
+- 📊 **Performance Metrics**: Track translation speed and efficiency
+- 💾 **Download/Share**: Individual or batch downloads, native share support
+- 🎯 **Error Handling**: Comprehensive error handling with user-friendly messages
+- 🚀 **3 Modes**: SDK (fast), CLI (official), Hybrid (best)
 
-### Why This Template?
-
-This template is designed to kickstart your project development with modern technologies and design practices. It
-integrates React, Vite, Tailwind CSS, and ShadcnUI to help you build aesthetically pleasing and performant web
-applications with ease.
-
-This template is a work in progress and will continue to evolve. We encourage you to suggest improvements by forking
-this repo, creating a pull request, or opening an issue. Your contributions are greatly appreciated!
-
-### Technologies Used
-
-<p>
-   <img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" alt="React" height="30px">
-   <img src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase&logoColor=white" alt="FirebaseContext" height="30px">
-   <img src="https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="TailwindCSS" height="30px">
-   <img src="https://img.shields.io/badge/shadcn%2Fui-000?style=for-the-badge&logo=shadcnui&logoColor=white" alt="ShadcnUI" height="30px">
-   <img src="https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E" alt="JavaScript" height="30px">
-   <img src="https://img.shields.io/badge/PostCSS-%23DD3A0A.svg?style=for-the-badge&logo=postcss&logoColor=white" alt="PostCSS" height="30px">
-   <img src="https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white" alt="ESLint" height="30px">
-   <img src="https://img.shields.io/badge/Prettier-F7B93E.svg?style=for-the-badge&logo=Prettier&logoColor=black" alt="Prettier" height="30px">
-</p>
-
-### Features
-
-- **React**: A powerful JavaScript library for building user interfaces.
-- **Vite**: A next-generation frontend tooling. It's fast and efficient, perfect for modern web development.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **ShadcnUI**: A design system that provides components and utilities for creating consistent and elegant UIs.
-- **JavaScript**: The core programming language for web development.
-- **PostCSS**: A tool for transforming CSS with JavaScript plugins.
-- **ESLint**: Code linting to maintain consistent code quality.
-- **Prettier**: Code formatting to ensure a consistent code style.
-
-## Getting Started
-
-### Prerequisites
-
-- **Node.js** (>= 20.0.0)
-- **npm** (>= 10.0.0) or **yarn** (>= 1.22.0)
-
-### Installation
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/RanitManik/React.shadcn.JS-Template.git
-   cd React.shadcn.JS-Template
-   ```
-
-2. **Install dependencies:**
-
-   ```bash
-   npm install
-   ```
-
-   or
-
-   ```bash
-   yarn install
-   ```
-
-### Running the Development Server
-
-To start the development server, run:
+## 🚀 Quick Start
 
 ```bash
-npm run dev
+# 1. Install dependencies
+npm install
+
+# 2. Configure API key
+cp .env.example .env
+# Edit .env and add: LINGODOTDEV_API_KEY=your_key_here
+
+# 3. Start application
+npm run dev:all
+
+# 4. Open browser
+# Frontend: http://localhost:5173
+# Backend: http://localhost:3001
 ```
 
-or
+## 📖 Documentation
+
+- **[QUICKSTART.md](./QUICKSTART.md)** - Get started in 3 steps
+- **[README_SETUP.md](./README_SETUP.md)** - Complete setup guide
+- **[CLI_INTEGRATION.md](./CLI_INTEGRATION.md)** - CLI integration details
+- **[DEMO.md](./DEMO.md)** - Demo script and talking points
+- **[IMPLEMENTATION_SUMMARY.md](./IMPLEMENTATION_SUMMARY.md)** - Technical summary
+
+## 🎮 Usage
+
+### 1. Upload Meme
+- Click "Get Started"
+- Upload image (max 10MB)
+- Enter English caption (max 200 chars)
+
+### 2. Select Languages
+- Choose from 12 languages
+- Use "Select All" for batch
+- Click "Generate Memes"
+
+### 3. Download Results
+- View translated memes in grid
+- Download individual memes
+- Or "Download All" for batch
+- Share via native share API
+
+## ⚙️ Configuration
+
+### Translation Modes
+
+**SDK Mode** (Fast, Development)
+```env
+TRANSLATION_MODE=sdk
+```
+
+**CLI Mode** (Official, Demos)
+```env
+TRANSLATION_MODE=cli
+```
+
+**Hybrid Mode** (Recommended, Production)
+```env
+TRANSLATION_MODE=hybrid
+CLI_BATCH_SIZE=3
+CLI_CONCURRENT=true
+```
+
+## 🧪 Testing
 
 ```bash
-yarn dev
+# Test CLI translation
+npm run test:cli
+
+# Test with custom caption
+npm run test:cli "Hello world" es fr ja
+
+# Test batch translation (5 captions, 12 languages)
+npm run test:batch
+
+# Test backend API
+curl http://localhost:3001/api/health
 ```
 
-Open your browser and navigate to `http://localhost:5173` to see the application in action.
+## 📊 Performance
 
-### Building for Production
+| Mode | 3 Languages | 12 Languages |
+|------|-------------|--------------|
+| SDK | ~500-1000ms | ~2000-3000ms |
+| CLI | ~3000-5000ms | ~10000-15000ms |
+| Hybrid | CLI + SDK fallback | Best reliability |
 
-To build the application for production, run:
+## 🏗️ Architecture
+
+```
+Frontend (React) → Backend (Express) → Translation Strategy
+                                          ↓
+                                   ┌──────┴──────┐
+                                   ↓             ↓
+                              Lingo CLI    Lingo SDK
+                                   ↓             ↓
+                              (Official)   (Fallback)
+```
+
+## 📦 Tech Stack
+
+**Frontend:**
+- React 18 + Vite 5
+- React Router 7
+- Shadcn UI + Tailwind CSS
+- Canvas API
+
+**Backend:**
+- Express 5
+- Lingo CLI (child_process)
+- Lingo.dev SDK
+- UUID, CORS, Dotenv
+
+**Translation:**
+- Lingo CLI (primary)
+- Lingo.dev SDK (fallback)
+
+## 🔧 API Endpoints
+
+### POST /api/translate
+Translate caption to multiple languages.
+
+### GET /api/health
+Check system health and configuration.
+
+### GET /api/languages
+Get list of supported languages.
+
+### GET /api/mode
+Get current translation mode info.
+
+## 🌍 Supported Languages
+
+🇪🇸 Spanish | 🇫🇷 French | 🇩🇪 German | 🇮🇹 Italian | 🇵🇹 Portuguese | 🇯🇵 Japanese | 🇰🇷 Korean | 🇨🇳 Chinese | 🇸🇦 Arabic | 🇮🇳 Hindi | 🇷🇺 Russian | 🇹🇷 Turkish
+
+## 🎯 Use Cases
+
+- **Content Creators**: Translate memes for global audiences
+- **Social Media**: Create multilingual content
+- **Marketing**: Localize viral content
+- **Education**: Learn language through memes
+- **Entertainment**: Share memes worldwide
+
+## 🐛 Troubleshooting
+
+**Backend not starting?**
+```bash
+# Run separately
+npm run server  # Terminal 1
+npm run dev     # Terminal 2
+```
+
+**Translation fails?**
+```bash
+# Use SDK mode
+TRANSLATION_MODE=sdk npm run server
+
+# Check API key
+echo $LINGODOTDEV_API_KEY
+```
+
+**CLI not working?**
+```bash
+# Verify CLI
+npx lingo.dev@latest --version
+
+# Use SDK fallback
+TRANSLATION_MODE=sdk
+```
+
+## 📝 Scripts
 
 ```bash
-npm run build
+npm run dev           # Start frontend
+npm run server        # Start backend
+npm run dev:all       # Start both (recommended)
+npm run test:cli      # Test CLI translation
+npm run test:batch    # Test batch translation
+npm run build         # Build for production
+npm run lint          # Run ESLint
+npm run format        # Format with Prettier
 ```
 
-or
+## 🚢 Production Deployment
 
-```bash
-yarn build
+1. Set environment variables
+2. Configure API key
+3. Use hybrid mode for reliability
+4. Enable error monitoring
+5. Set appropriate batch size
+6. Configure CORS for your domain
+
+```env
+LINGODOTDEV_API_KEY=your_production_key
+TRANSLATION_MODE=hybrid
+CLI_BATCH_SIZE=3
+CLI_CONCURRENT=true
+PORT=3001
 ```
 
-The built files will be located in the `dist` directory.
+## 🤝 Contributing
 
-### Linting and Formatting
+This is a hackathon MVP. Contributions welcome!
 
-To lint your code, run:
+## 📄 License
 
-```bash
-npm run lint
-```
+MIT
 
-or
+## 🙏 Acknowledgments
 
-```bash
-yarn lint
-```
+- [Lingo.dev](https://lingo.dev) for AI translation
+- [Shadcn UI](https://ui.shadcn.com/) for components
+- [Vite](https://vitejs.dev/) for build tooling
+- [React](https://reactjs.org/) for framework
 
-To format your code, run:
+## 📞 Support
 
-```bash
-npm run format
-```
-
-or
-
-```bash
-yarn format
-```
-
-## Project Structure
-
-The project structure is as follows:
-
-```
-├── components.json # Component metadata
-├── index.html # HTML template
-├── LICENSE # License information
-├── package.json # Project dependencies and scripts
-├── package-lock.json # Lock file for dependencies
-├── postcss.config.js # PostCSS configuration
-├── public # Static assets
-│ └── vite.svg # Vite logo
-├── README.md # Project documentation
-├── src # Main source code
-│ ├── App.jsx # Main application component
-│ ├── components # All components
-│ │ └── ui # Reusable ShadcnUI components
-│ │     └── button.jsx # Shadcn Button component
-│ ├── index.css # Global styles
-│ ├── lib # Utility functions
-│ │ └── utils.js # Utility functions
-│ └── main.jsx # Entry point for React application
-├── tailwind.config.js # Tailwind CSS configuration
-├── tsconfig.json # TypeScript configuration
-├── tsconfig.node.json # TypeScript configuration for Node.js
-└── vite.config.js # Vite configuration file
-```
-
-## Contributing
-
-We welcome contributions to enhance the React.shadcn.JS-Template project. To contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix:
-
-   ```bash
-   git checkout -b feature-name
-   ```
-
-3. Make your changes and commit them with clear and descriptive messages.
-4. Push your changes to your fork:
-
-   ```bash
-   git push origin feature-name
-   ```
-
-5. Create a pull request to the main repository, detailing the changes and enhancements you have made.
-
-## Contact
-
-- **LinkedIn**: [Ranit Manik](https://www.linkedin.com/in/ranit-manik/)
-- **GitHub**: [RanitManik](https://github.com/RanitManik)
-- **Email**: [ranitmanik.dev@gmail.com](mailto:ranitmanik.dev@gmail.com)
-
-_Feel free to reach out if you have questions or just want to chat about web adventures!_
-
-## Acknowledgments
-
-- [Markdown Badges](https://github.com/Ileriayo/markdown-badges)
-- [shields.io Badges](https://shields.io/)
-- [Skill Icons](https://github.com/tandpfun/skill-icons)
+- **Documentation**: See docs folder
+- **Issues**: Check server logs
+- **CLI Docs**: https://lingo.dev/en/cli
+- **SDK Docs**: https://docs.lingo.dev/
 
 ---
 
-<p align="center">
-   Thank you for using the <strong>React.shadcn.JS-Template</strong>! Happy coding! 🚀
-</p>
+**Built with ❤️ for global meme translation**
+
+🚀 **Status: Production Ready**
