@@ -1,17 +1,10 @@
-import { useState, useEffect, useRef, createRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { MemeCanvas } from "@/components/MemeCanvas";
+import { useEffect, useRef, useState, createRef } from "react"
+import { useNavigate } from "react-router-dom"
+
+import { Badge } from "@/components/design/Badge"
+import { Button } from "@/components/design/Button"
+import { Card } from "@/components/design/Card"
+import { MemeCanvas } from "@/components/MemeCanvas"
 
 const LANGUAGE_NAMES = {
   es: "Spanish",
@@ -44,77 +37,76 @@ const LANGUAGE_FLAGS = {
 };
 
 export function Results() {
-  const navigate = useNavigate();
-  const [memeData, setMemeData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [downloadingLang, setDownloadingLang] = useState(null);
-  const canvasRefs = useRef({});
+  const navigate = useNavigate()
+  const [memeData, setMemeData] = useState(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [downloadingLang, setDownloadingLang] = useState(null)
+  const canvasRefs = useRef({})
 
   useEffect(() => {
-    const storedData = sessionStorage.getItem("memeData");
+    const storedData = sessionStorage.getItem("memeData")
     if (storedData) {
       try {
-        const data = JSON.parse(storedData);
-        setMemeData(data);
+        const data = JSON.parse(storedData)
+        setMemeData(data)
 
         if (data.translations) {
           data.translations.forEach((translation) => {
             if (!canvasRefs.current[translation.lang]) {
-              canvasRefs.current[translation.lang] = createRef();
+              canvasRefs.current[translation.lang] = createRef()
             }
-          });
+          })
         }
       } catch (error) {
-        console.error("Failed to parse meme data:", error);
-        navigate("/");
+        console.error("Failed to parse meme data:", error)
+        navigate("/create")
       } finally {
-        setTimeout(() => setIsLoading(false), 500);
+        setTimeout(() => setIsLoading(false), 500)
       }
     } else {
-      navigate("/");
+      navigate("/create")
     }
-  }, [navigate]);
+  }, [navigate])
 
   const handleDownload = async (langCode) => {
-    const canvasRef = canvasRefs.current[langCode];
-    if (!canvasRef || !canvasRef.current) return;
+    const canvasRef = canvasRefs.current[langCode]
+    if (!canvasRef || !canvasRef.current) return
 
-    setDownloadingLang(langCode);
+    setDownloadingLang(langCode)
     try {
-      await new Promise(resolve => setTimeout(resolve, 300));
-      const languageName = LANGUAGE_NAMES[langCode] || langCode;
-      const filename = `meme-${langCode}-${Date.now()}.png`;
-      canvasRef.current.download(filename);
+      await new Promise((resolve) => setTimeout(resolve, 300))
+      const filename = `meme-${langCode}-${Date.now()}.png`
+      canvasRef.current.download(filename)
     } finally {
-      setDownloadingLang(null);
+      setDownloadingLang(null)
     }
-  };
+  }
 
   const handleShare = async (langCode) => {
-    const canvasRef = canvasRefs.current[langCode];
-    if (!canvasRef || !canvasRef.current) return;
+    const canvasRef = canvasRefs.current[langCode]
+    if (!canvasRef || !canvasRef.current) return
 
     try {
-      const dataUrl = canvasRef.current.getDataUrl();
-      if (!dataUrl) return;
+      const dataUrl = canvasRef.current.getDataUrl()
+      if (!dataUrl) return
 
-      const response = await fetch(dataUrl);
-      const blob = await response.blob();
+      const response = await fetch(dataUrl)
+      const blob = await response.blob()
 
       if (navigator.share && navigator.canShare) {
         const file = new File([blob], `meme-${langCode}.png`, {
           type: "image/png",
-        });
+        })
 
         const shareData = {
           title: "Translated Meme",
           text: `Check out this meme in ${LANGUAGE_NAMES[langCode]}!`,
           files: [file],
-        };
+        }
 
         if (navigator.canShare(shareData)) {
-          await navigator.share(shareData);
-          return;
+          await navigator.share(shareData)
+          return
         }
       }
 
@@ -123,171 +115,156 @@ export function Results() {
           new ClipboardItem({
             "image/png": blob,
           }),
-        ]);
-        alert("Meme copied to clipboard!");
+        ])
+        alert("Meme copied to clipboard!")
       } else {
-        alert(
-          "Sharing not supported on this browser. Use the Download button instead."
-        );
+        alert("Sharing not supported on this browser. Use the Download button instead.")
       }
     } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error("Share failed:", error);
-        alert("Failed to share. Try downloading instead.");
+      if (error.name !== "AbortError") {
+        console.error("Share failed:", error)
+        alert("Failed to share. Try downloading instead.")
       }
     }
-  };
+  }
 
   const handleDownloadAll = async () => {
-    if (!memeData?.translations) return;
+    if (!memeData?.translations) return
 
     for (const translation of memeData.translations) {
-      await handleDownload(translation.lang);
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await handleDownload(translation.lang)
+      await new Promise((resolve) => setTimeout(resolve, 500))
     }
-  };
+  }
 
   const handleCreateNew = () => {
-    sessionStorage.removeItem("memeData");
-    navigate("/");
-  };
+    sessionStorage.removeItem("memeData")
+    navigate("/create")
+  }
 
   if (!memeData && !isLoading) {
-    return null;
+    return null
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
-        <div className="container mx-auto px-4 py-8">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <Skeleton className="h-10 w-64 mb-2" />
-              <Skeleton className="h-6 w-96" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3].map((i) => (
-                <Card key={i}>
-                  <CardHeader>
-                    <Skeleton className="h-6 w-24" />
-                    <Skeleton className="h-4 w-full mt-2" />
-                  </CardHeader>
-                  <CardContent>
-                    <Skeleton className="aspect-square w-full rounded-lg" />
-                  </CardContent>
-                  <CardFooter>
-                    <Skeleton className="h-10 w-full" />
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          </div>
+      <div className="flex min-h-screen items-center justify-center bg-[#f8f8f8] p-10">
+        <div className="flex max-w-4xl flex-col gap-6">
+          {[1, 2, 3].map((item) => (
+            <div key={item} className="h-24 animate-pulse border-4 border-black bg-white shadow-[8px_8px_0px_0px_#111]" />
+          ))}
         </div>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900">
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-            <div>
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-50 mb-2">
-                Your Translated Memes
-              </h1>
-              <p className="text-slate-600 dark:text-slate-400">
-                Generated {memeData.translations?.length || 0} translation
-                {memeData.translations?.length !== 1 ? "s" : ""} for: "
-                {memeData.caption}"
-              </p>
-              {memeData.metadata && (
-                <div className="flex gap-2 mt-2">
-                  <Badge variant="secondary">
-                    {Math.round(memeData.metadata.duration / 1000)}s total
-                  </Badge>
-                  <Badge variant="secondary">
-                    ~{Math.round(memeData.metadata.duration / memeData.metadata.languageCount)}ms per language
-                  </Badge>
-                </div>
-              )}
-            </div>
-            <div className="flex gap-2">
-              <Button variant="outline" onClick={handleDownloadAll}>
-                Download All
-              </Button>
-              <Button onClick={handleCreateNew}>Create New Meme</Button>
-            </div>
+    <div className="min-h-screen bg-[#f8f8f8] text-[#111]">
+      <div className="border-b-4 border-black bg-white">
+        <div className="container mx-auto flex flex-col gap-4 px-4 py-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <Badge color="bg-[#F8D300]" textColor="text-black">
+              Results Overview
+            </Badge>
+            <h1 className="mt-4 text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tight">
+              Your translated memes are ready
+            </h1>
+            <p className="mt-2 max-w-2xl text-base sm:text-lg font-semibold">
+              Generated {memeData.translations?.length || 0} translation
+              {memeData.translations?.length !== 1 ? "s" : ""} for “{memeData.caption}”.
+            </p>
+            {memeData.metadata ? (
+              <div className="mt-4 flex flex-wrap gap-3">
+                <Badge color="bg-[#E60023]">{Math.round(memeData.metadata.duration / 1000)}s total</Badge>
+                <Badge color="bg-[#004B8D]">
+                  ~{Math.round(memeData.metadata.duration / memeData.metadata.languageCount)}ms per language
+                </Badge>
+                <Badge color="bg-black">{memeData.metadata.languageCount} variations</Badge>
+              </div>
+            ) : null}
           </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button variant="secondary" className="px-6 py-3" onClick={handleDownloadAll}>
+              Download All
+            </Button>
+            <Button className="px-6 py-3" onClick={handleCreateNew}>
+              Create New Meme
+            </Button>
+          </div>
+        </div>
+      </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {memeData.translations?.map((translation) => (
-              <Card key={translation.lang} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <span className="text-2xl">{LANGUAGE_FLAGS[translation.lang]}</span>
-                    {LANGUAGE_NAMES[translation.lang]}
-                  </CardTitle>
-                  <CardDescription className="line-clamp-2">
-                    {translation.text}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden flex items-center justify-center">
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <h2 className="mb-6 text-xl sm:text-2xl font-black uppercase tracking-tight">International lineup</h2>
+            <div className="grid gap-6 md:grid-cols-2">
+              {memeData.translations?.map((translation) => (
+                <Card key={translation.lang} className="bg-white">
+                  <div className="flex items-center justify-between border-b-4 border-black pb-4">
+                    <div className="flex items-center gap-2 text-base sm:text-lg md:text-xl font-black uppercase">
+                      <span className="text-xl sm:text-2xl">{LANGUAGE_FLAGS[translation.lang]}</span>
+                      <span className="truncate">{LANGUAGE_NAMES[translation.lang]}</span>
+                    </div>
+                    <Badge color="bg-[#F8D300]" textColor="text-black">
+                      Ready
+                    </Badge>
+                  </div>
+                  <p className="mt-3 text-sm font-semibold uppercase text-gray-600">Caption</p>
+                  <p className="mt-1 line-clamp-2 text-base font-semibold">{translation.text}</p>
+                  <div className="mt-4 border-4 border-black bg-[#f3f3f3] p-2">
                     <MemeCanvas
                       ref={canvasRefs.current[translation.lang]}
                       imageUrl={memeData.file}
                       caption={translation.text}
                       width={500}
                       height={500}
-                      className="rounded-lg"
+                      className="w-full"
                     />
                   </div>
-                </CardContent>
-                <CardFooter className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => handleDownload(translation.lang)}
-                    disabled={downloadingLang === translation.lang}
-                  >
-                    {downloadingLang === translation.lang ? "Downloading..." : "Download"}
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="flex-1"
-                    onClick={() => handleShare(translation.lang)}
-                  >
-                    Share
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
+                  <div className="mt-4 flex gap-3">
+                    <Button
+                      variant="secondary"
+                      className="flex-1 px-4 py-2 text-sm"
+                      onClick={() => handleDownload(translation.lang)}
+                      disabled={downloadingLang === translation.lang}
+                    >
+                      {downloadingLang === translation.lang ? "Downloading..." : "Download"}
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="flex-1 px-4 py-2 text-sm"
+                      onClick={() => handleShare(translation.lang)}
+                    >
+                      Share
+                    </Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-12">
-            <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-50 mb-4">
-              Original Meme
-            </h2>
-            <Card className="max-w-md">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <span className="text-2xl">🇬🇧</span>
-                  English (Original)
-                </CardTitle>
-                <CardDescription>{memeData.caption}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <img
-                  src={memeData.file}
-                  alt="Original meme"
-                  className="w-full h-auto rounded-lg"
-                />
-              </CardContent>
+          <div className="flex flex-col gap-6">
+            <Card className="bg-white">
+              <h2 className="text-xl sm:text-2xl font-black uppercase">Original meme</h2>
+              <p className="mt-2 text-sm font-semibold text-gray-600">English (source)</p>
+              <p className="mt-2 text-sm sm:text-base font-semibold">{memeData.caption}</p>
+              <div className="mt-4 border-4 border-black bg-[#f3f3f3] p-2">
+                <img src={memeData.file} alt="Original meme" className="w-full" />
+              </div>
+            </Card>
+
+            <Card className="bg-white">
+              <h3 className="text-lg sm:text-xl font-black uppercase">Team highlights</h3>
+              <ul className="mt-4 space-y-3 text-sm font-semibold">
+                <li>• Share download links directly with regional partners.</li>
+                <li>• Use “Share” to copy assets into social schedulers instantly.</li>
+                <li>• Track translation speed to showcase production wins.</li>
+              </ul>
             </Card>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
