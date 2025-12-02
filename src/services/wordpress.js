@@ -1,6 +1,7 @@
 // WordPress REST API service
 // Replace <MY-WORDPRESS-URL> with your actual WordPress site URL (e.g., http://localhost:10003)
-const WP_API_URL = "http://lingo-blog.local/wp-json/wp/v2";
+
+const WP_API_URL = "https://symptomatic-koala.localsite.io/wp-json/wp/v2";
 
 /**
  * Fetch all posts with embedded data (featured image, author, etc.)
