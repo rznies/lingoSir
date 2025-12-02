@@ -116,6 +116,9 @@ export function Home() {
             <a href="#demo" className="font-bold transition-colors hover:text-[#004B8D]">
               Live Demo
             </a>
+            <a href="/blog" className="font-bold transition-colors hover:text-[#004B8D]" onClick={(e) => { e.preventDefault(); navigate("/blog"); }}>
+              Blog
+            </a>
             <Button variant="primary" className="px-4 py-2 text-sm" onClick={handleCta}>
               Get Started
             </Button>
@@ -141,6 +144,9 @@ export function Home() {
               </a>
               <a href="#demo" className="text-lg font-bold" onClick={() => setIsMenuOpen(false)}>
                 Live Demo
+              </a>
+              <a href="/blog" className="text-lg font-bold" onClick={(e) => { e.preventDefault(); setIsMenuOpen(false); navigate("/blog"); }}>
+                Blog
               </a>
               <Button variant="primary" className="w-full" onClick={handleCta}>
                 Get Started
